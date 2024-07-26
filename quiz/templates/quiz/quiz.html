@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="{% static 'quiz/assets/js/color-modes.js' %}"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+    <meta name="generator" content="Hugo 0.122.0" />
+    <title>Quiz</title>
+    <link rel="stylesheet" href="{% static 'quiz/assets/css/global.css' %}" />
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/" />
+
+    <link rel="shortcut icon" href="{% static 'home/assets/brand/logo-removebg-preview1.png' %}" type="image/x-icon" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+
+    <link href="{% static 'quiz/assets/dist/css/bootstrap.min.css' %}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="{% static 'quiz/assets/css/dashboard.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <img src="{% static 'quiz/assets/brand/logo-removebg-preview.png' %}" class="rounded me-2" alt="..." style="width: 40px;" />
+          <strong class="me-auto">Quiz Timer</strong>
+          <small>Now</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toast-body">You have Spent 10 Minutes of your Time</div>
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid justify-content-between">
+        <a class="navbar-brand px-2" href="quizzes.html">{{ quiz.category }} Quiz</a>
+      </div>
+    </nav>
+    <main class="container" id="quiz-container">
+      <div class="bg-body-tertiary p-5 rounded" id="quiz-instructions">
+        <div class="card">
+          <div class="card-body">
+            <span class="opacity-50 fw-medium">Course Title:</span><br />
+            <p class="opacity-70 fw-medium mb-1 px-2">{{ quiz.course.course_title }}</p>
+            <span class="opacity-50 fw-medium">Course Code:</span><br />
+            <p class="opacity-70 fw-medium mb-1 px-2">{{ quiz.course.course_code }}</p>
+            <span class="opacity-50 fw-medium">Credit Hours:</span><br />
+            <p class="opacity-70 fw-medium mb-1 px-2">{{ quiz.course.credit_hours }} Credit Hours</p>
+            <span class="opacity-50 fw-medium">Course Lecturer:</span>
+            <p class="opacity-70 fw-medium mb-1 px-2">{{ quiz.course.lecturer.position }} {{ quiz.course.lecturer.user.first_name }} {{ quiz.course.lecturer.user.last_name }}</p>
+          </div>
+        </div>
+        <hr />
+
+        <p class="lead">
+          <h5>Instructions</h5>
+          <hr />
+          <ul>
+            {% for instruction in instructions %}
+              <li>{{ instruction.text }}</li>
+            {% endfor %}
+            <li>Switching out of the tab will automatically submit the form, be warned</li>
+          </ul>
+          <hr />
+        </p>
+        <a id="begin" class="btn btn-sm btn-primary" role="button">Begin Quiz</a>
+      </div>
+      <div class="bg-body-tertiary p-3 rounded" id="quiz-form" style="display: none;">
+        <p class="lead">
+          <h6 class="h6">{{quiz.course.course_title}}</h6>
+          <hr />
+          <ul>
+            {% for instruction in instructions %}
+              <li>{{ instruction.text }}</li>
+            {% endfor %}
+            <li>Switching out of the tab will automatically submit the form, be warned</li>
+          </ul>
+          <hr />
+        </p>
+        <div class="card px-3">
+          <div class="card-body">
+            <form action="{% url 'quiz' quiz.id %}" method="post">
+              {% csrf_token %}
+              <ol>
+                {% for question in questions %}
+                  <li>{{ question.text }}</li>
+                  {% for answer in answers %}
+                    {% if answer.question.id == question.id %}
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="{{question.id}}" id="{{answer.id}}" value="{{answer.id}}"/>
+                        <label class="form-check-label" for="{{answer.id}}">{{ answer.text }}</label>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </ol>
+              <hr />
+              <button class="btn btn-primary py-2 px-3" type="submit">Submit Quiz</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="{% static 'quiz/assets/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'quiz/assets/js/events.js' %}"></script>
+  </body>
+</html>
