@@ -1,0 +1,59 @@
+{% extends "home/layout.html" %} {%block title%} Dashboard {%endblock title%} {% block body %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+  >
+    <h4 class="h4">Dashboard</h4>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary">
+          Share
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">
+          Export
+        </button>
+      </div>
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1"
+      >
+        <svg class="bi"><use xlink:href="#calendar3"></use></svg>
+        This week
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row justify-content-around">
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <span class="opacity-50 fw-medium">Number of Quizzes</span>
+          <h3 class="h3 py-2">6</h3>
+          <p class="fs-6 opacity-50 fw-medium">This Week</p>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <span class="opacity-50 fw-medium">Average Scores</span>
+          <h3 class="h3 py-2">84.55%</h3>
+          <p class="fs-6 opacity-50 fw-medium">Remarks:</p>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <span class="opacity-50 fw-medium">Quizzes Submitted</span>
+          <h3 class="h3 py-2">4</h3>
+          <p class="fs-6 opacity-50 fw-medium">Confirmed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h4 class="my-3">Performance Summary</h4>
+  <canvas
+    class="my-4 w-100"
+    id="myChart"
+    width="718"
+    height="303"
+    style="display: block; box-sizing: border-box; height: 303px; width: 718px"
+  ></canvas>
+</main>
+{% endblock %}
