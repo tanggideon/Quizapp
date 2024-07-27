@@ -16,3 +16,4 @@ class CourseAdmin(admin.ModelAdmin):
 admin.site.register(Student)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Lecturer, LectureAdmin)
+

@@ -45,6 +45,5 @@ def profile(request, pk):
     return render(request, "home/profile.html", context=context)
 
 
-def newQuiz(request):
-    return render(request, "home/new_quiz.html")
+
 

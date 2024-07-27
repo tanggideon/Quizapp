@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render
 from home.models import Course
-from .models import Quiz, Question, Answer
+from .models import Quiz, Question, Answer, Category
 from reports.models import QuizAttempts
 from django.contrib.auth.models import User
 
@@ -47,7 +47,7 @@ def quiz(request, pk):
             passed = True
         else:
             passed = False
-
+        # Remember 
         student_attempt = QuizAttempts(student=User.student.objects.get(pk=request.user.id), 
                                        quiz=quiz.id, 
                                        choices=choices, 
@@ -63,6 +63,17 @@ def quiz(request, pk):
         print(passed)
         
     return render(request, "quiz/quiz.html", context=context)
+
+
+def new_quiz(request):
+    categories = Category.objects.all()
+    courses = Course.objects.all()
+    context = {
+        'categories':categories,
+        'courses':courses
+    }
+    return render(request, "quiz/new_quiz.html", context=context)
+
 
 def success(request):
     return render(request, "quiz/success.html")

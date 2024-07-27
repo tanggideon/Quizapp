@@ -26,7 +26,7 @@ def resources(request):
 
         # File Upload Handling
         file = request.FILES['file']
-        fs = FileSystemStorage(location='files')
+        fs = FileSystemStorage(location='media/files')
         filename = fs.save(file.name, file)
         uploaded_file_url = fs.url(filename)
 

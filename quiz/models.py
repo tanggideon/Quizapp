@@ -3,15 +3,20 @@ from home.models import BaseModel, Course
 from django.utils import timezone
 import uuid
 
-quiz_categories = [
-    ('Midsemester', 'Midsem Quiz'),
-    ('Take Home', 'Take Home Assignment'),
-    ('Classroom', 'Classroom Quiz'),
-]
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=32)
+    require_qrcode = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.category_name
+
+    class Meta:
+        verbose_name_plural = 'Categories'
 
 
 class Quiz(BaseModel):
-    category = models.CharField(max_length=21, choices=quiz_categories, null=False)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='category', null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     duration = models.IntegerField(help_text='Enter Time in Minutes')
     number_of_questions = models.IntegerField(null=True)

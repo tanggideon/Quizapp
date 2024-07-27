@@ -27,7 +27,6 @@ class BaseInfo(models.Model):
 class Student(BaseModel, BaseInfo):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="student")
     cummulative = models.DecimalField(max_digits=3, decimal_places=2, default=4.00, editable=False)
-    course = models.ForeignKey('Course', on_delete=models.CASCADE, null=True)
 
 
 position = [
